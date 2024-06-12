@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, Button, Text, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Welcome = ({ navigation }) => {
   const [currentLocation, setCurrentLocation] = useState({
@@ -11,6 +12,7 @@ const Welcome = ({ navigation }) => {
       longitude: 121.069664,
     },
   });
+  const [markers, setMarkers] = useState([])
 
   useEffect(() => {
     (async () => {
@@ -22,12 +24,23 @@ const Welcome = ({ navigation }) => {
 
       let location = await Location.getCurrentPositionAsync({});
       setCurrentLocation(location);
+
+      try {
+        const jsonValue = await AsyncStorage.getItem('entries');
+        if (jsonValue != null) {
+          setMarkers(JSON.parse(jsonValue))
+        }
+      } catch (e) {
+        // error reading value
+      }
     })();
   }, []);
 
   const handleOpenCameraButtonPress = () => {
     setShowCamera(!showCamera);
   };
+
+  console.log('markers', markers)
 
   return (
     <View style={{ flex: 1 }}>
@@ -42,15 +55,23 @@ const Welcome = ({ navigation }) => {
       >
         <Marker
           coordinate={{ latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }}
-          pinColor="red"
+          pinColor="green"
           title="Current Location"
         />
+        {markers.length > 0 && markers.map((marker, index) => (
+          <Marker
+            key={index}
+            coordinate={{ latitude: marker.currentLocation.coords.latitude, longitude: marker.currentLocation.coords.longitude }}
+            title={marker.title}
+          />
+          ))
+        }
       </MapView>
 
       <TouchableOpacity
         style={{ padding: 10, backgroundColor: '#007AFF', alignItems: 'center',
                 marginTop: 10, height: '10%', justifyContent: 'center'  }}
-        onPress={()=>navigation.navigate("Camera")}
+        onPress={()=>navigation.navigate("Camera", { currentLocation })}
       >
         <Text style={{ color: 'white', fontSize: 20 }}>Open Camera</Text>
       </TouchableOpacity>

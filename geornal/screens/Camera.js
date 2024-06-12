@@ -3,10 +3,12 @@ import React, { useState, useRef } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View, Platform, ImageBackground } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 
-export default function CameraScreen({navigation}) {
+export default function CameraScreen({navigation, route}) {
   const [permission, requestPermission] = useCameraPermissions();
   const [preview, setPreview] = useState(null);
   const cameraRef = useRef(null); // Create a ref for the CameraView
+
+  const { currentLocation } = route.params
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -45,7 +47,7 @@ export default function CameraScreen({navigation}) {
                         <Text style={styles.text}>Retake</Text>
                     </TouchableOpacity>
                     {/* Navigate to Entry button */}
-                    <TouchableOpacity style={{ width: "45%" }} onPress={() => navigation.navigate("Entry")}>
+                    <TouchableOpacity style={{ width: "45%" }} onPress={() => navigation.navigate("Entry", { preview, currentLocation })}>
                         <Text style={styles.text}>Okay</Text>
                     </TouchableOpacity>
                 </View>
