@@ -31,8 +31,6 @@ const Entry = ({ navigation, route }) => {
       // Append the new entry to the existing ones
       entries.push(newEntry);
 
-      console.log(entries)
-
       // Save the updated entries
       await AsyncStorage.setItem('entries', JSON.stringify(entries));
       alert('Entry saved!');
