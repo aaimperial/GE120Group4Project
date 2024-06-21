@@ -1,6 +1,8 @@
+// screens/Welcome.js
 import React, { useState } from 'react';
-import { View, Text, Button, Image, TextInput, StyleSheet, Alert } from 'react-native';
+import { View, Text, Button, Image, TextInput, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Entry = ({ navigation, route }) => {
   const { preview, currentLocation } = route.params;
@@ -15,7 +17,7 @@ const Entry = ({ navigation, route }) => {
       let entries = [];
 
       // Parse the existing entries into an array
-      if (existingEntries !== null) {
+      if (existingEntries!== null) {
         entries = JSON.parse(existingEntries);
       }
 
@@ -24,7 +26,7 @@ const Entry = ({ navigation, route }) => {
         title,
         description,
         preview,
-        currentLocation,
+        currentLocation 
       };
 
       // Append the new entry to the existing ones
@@ -32,76 +34,72 @@ const Entry = ({ navigation, route }) => {
 
       // Save the updated entries
       await AsyncStorage.setItem('entries', JSON.stringify(entries));
-      Alert.alert('Entry saved!');
+      alert('Entry saved!');
       navigation.navigate('Welcome');
     } catch (error) {
-      console.error('Error saving entry:', error);
-      Alert.alert('Error', 'Failed to save entry. Please try again later.');
+      console.error(error);
     }
-  };
+  }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.titleText}>GEOrnal Entry</Text>
-      <Image source={{ uri: preview }} style={styles.image} />
-      <Text style={styles.coords}>
-        Coordinates: {currentLocation.coords.latitude}, {currentLocation.coords.longitude}
-      </Text>
+    <View style={ styles.box }>
+      <Text style = {styles.titleText}> GEOrnal Entry </Text>
+      <Image source={{ uri: preview }} style={{ width: 300, height: 300 }} />
+      <Text style = {styles.coords}>Coordinates: {currentLocation.coords.latitude}, {currentLocation.coords.longitude}</Text>
       <TextInput
         placeholder="Title"
         value={title}
         onChangeText={setTitle}
-        style={styles.input}
+        style={styles.heading}
       />
       <TextInput
         placeholder="Description"
         value={description}
         onChangeText={setDescription}
-        style={[styles.input, { height: 100 }]}
+        style={styles.caption}
         multiline
       />
-      <Button
+      <Button 
         title="Save"
-        onPress={saveEntry}
+        onPress={saveEntry} 
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#99ffd6',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
   titleText: {
     fontSize: 30,
     fontWeight: '600',
-    color: '#0099ff',
-    marginBottom: 20,
+    color: '#ffff80'
   },
-  image: {
-    width: 300,
-    height: 300,
-    marginBottom: 20,
+  box: {
+    flex: 1,
+    backgroundColor: '#2d8659',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   coords: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
-    color: '#007acc',
-    marginBottom: 20,
+    color: '#ffff80'
   },
-  input: {
-    backgroundColor: 'white',
-    borderColor: '#33ccff',
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    width: '100%',
-    height: 40,
+  heading: {
+    color: '#2d8659', 
+    height: 40, 
+    backgroundColor: '#ffffcc',
+    marginBottom: 10, 
+    width: '83%' 
   },
-});
+  caption: {
+    color: '#2d8659', 
+    height: 90, 
+    backgroundColor: '#ffffcc',
+    marginBottom: 10, 
+    width: '83%'
+  }
+})
 
 export default Entry;
+
+
