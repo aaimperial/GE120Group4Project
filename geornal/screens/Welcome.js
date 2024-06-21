@@ -1,4 +1,3 @@
-// screens/Welcome.js
 import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity, Button, Text, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
@@ -36,10 +35,6 @@ const Welcome= ({ navigation }) => {
     })();
   }, []);
 
-  const handleOpenCameraButtonPress = () => {
-    setShowCamera(!showCamera);
-  };
-
   console.log('markers', markers)
 
   return (
@@ -70,25 +65,24 @@ const Welcome= ({ navigation }) => {
 
       <TouchableOpacity
         style={{
-          opacity:100,
-          marginVertical: 5,
-          marginHorizontal:160,
+          position: 'absolute',
+          bottom: 20,
+          right: 20,
           borderRadius: 100,
-          backgroundColor: '#e0e497', 
-          height:75,
+          backgroundColor: '#e0e497',
+          height: 75,
           width: 75,
-          justifyContent: 'center',  
-          alignItems: 'center', 
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
         onPress={()=>navigation.navigate("Camera", { currentLocation })}
       >
-        <Text style={{ 
-          color: '#52685b', 
+        <Text style={{
+          color: '#52685b',
           fontFamily: 'Impact',
           fontSize: 15,
           textAlign: 'center'
-
-           }}>Open Camera</Text>
+        }}>Open Camera</Text>
       </TouchableOpacity>
     </View>
   );

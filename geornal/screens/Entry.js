@@ -44,8 +44,6 @@ const Entry = ({ navigation, route }) => {
 
   return (
     <View style={ styles.box }>
-      <Text style = {styles.titleText}> GEOrnal Entry </Text>
-      <Image source={{ uri: preview }} style={{ width: 300, height: 300 }} />
       <Text style = {styles.coords}>Coordinates: {currentLocation.coords.latitude}, {currentLocation.coords.longitude}</Text>
       <TextInput
         placeholder="Title"
