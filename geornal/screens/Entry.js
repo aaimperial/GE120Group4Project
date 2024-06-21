@@ -1,7 +1,9 @@
+
 // screens/Welcome.js
 import React, { useState } from 'react';
-import { View, Text, Button, Image, TextInput } from 'react-native';
+import { View, Text, Button, Image, TextInput, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Entry = ({ navigation, route }) => {
   const { preview, currentLocation } = route.params;
@@ -25,7 +27,7 @@ const Entry = ({ navigation, route }) => {
         title,
         description,
         preview,
-        currentLocation
+        currentLocation 
       };
 
       // Append the new entry to the existing ones
@@ -41,26 +43,62 @@ const Entry = ({ navigation, route }) => {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Add Entry</Text>
-      <Image source={{ uri: preview }} style={{ width: 200, height: 200 }} />
-      <Text>Coordinates: {currentLocation.coords.latitude}, {currentLocation.coords.longitude}</Text>
+    <View style={ styles.box }>
+      <Text style = {styles.titleText}> GEOrnal Entry </Text>
+      <Image source={{ uri: preview }} style={{ width: 300, height: 300 }} />
+      <Text style = {styles.coords}>Coordinates: {currentLocation.coords.latitude}, {currentLocation.coords.longitude}</Text>
       <TextInput
         placeholder="Title"
         value={title}
         onChangeText={setTitle}
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, width: '80%' }}
+        style={styles.heading}
       />
       <TextInput
         placeholder="Description"
         value={description}
         onChangeText={setDescription}
-        style={{ height: 80, borderColor: 'gray', borderWidth: 1, marginBottom: 10, width: '80%' }}
+        style={styles.caption}
         multiline
       />
-      <Button title="Save" onPress={saveEntry} />
+      <Button 
+        title="Save"
+        onPress={saveEntry} 
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  titleText: {
+    fontSize: 30,
+    fontWeight: '600',
+    color: '#ffff80'
+  },
+  box: {
+    flex: 1,
+    backgroundColor: '#2d8659',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  coords: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#ffff80'
+  },
+  heading: {
+    color: '#2d8659', 
+    height: 40, 
+    backgroundColor: '#ffffcc',
+    marginBottom: 10, 
+    width: '83%' 
+  },
+  caption: {
+    color: '#2d8659', 
+    height: 90, 
+    backgroundColor: '#ffffcc',
+    marginBottom: 10, 
+    width: '83%'
+  }
+})
 
 export default Entry;

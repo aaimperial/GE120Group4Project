@@ -5,7 +5,7 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Welcome = ({ navigation }) => {
+const Welcome= ({ navigation }) => {
   const [currentLocation, setCurrentLocation] = useState({
     coords: {
       latitude: 14.656363,
@@ -55,8 +55,8 @@ const Welcome = ({ navigation }) => {
       >
         <Marker
           coordinate={{ latitude: currentLocation.coords.latitude, longitude: currentLocation.coords.longitude }}
-          pinColor="green"
-          title="Current Location"
+          pinColor="#52685b"
+          title="Current Location" 
         />
         {markers.length > 0 && markers.map((marker, index) => (
           <Marker
@@ -69,11 +69,26 @@ const Welcome = ({ navigation }) => {
       </MapView>
 
       <TouchableOpacity
-        style={{ padding: 10, backgroundColor: '#007AFF', alignItems: 'center',
-                marginTop: 10, height: '10%', justifyContent: 'center'  }}
+        style={{
+          opacity:100,
+          marginVertical: 5,
+          marginHorizontal:160,
+          borderRadius: 100,
+          backgroundColor: '#e0e497', 
+          height:75,
+          width: 75,
+          justifyContent: 'center',  
+          alignItems: 'center', 
+        }}
         onPress={()=>navigation.navigate("Camera", { currentLocation })}
       >
-        <Text style={{ color: 'white', fontSize: 20 }}>Open Camera</Text>
+        <Text style={{ 
+          color: '#52685b', 
+          fontFamily: 'Impact',
+          fontSize: 15,
+          textAlign: 'center'
+
+           }}>Open Camera</Text>
       </TouchableOpacity>
     </View>
   );
